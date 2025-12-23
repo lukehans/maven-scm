@@ -53,7 +53,9 @@ public class GitInfoCommand extends AbstractCommand implements GitCommand {
 
         Commandline baseCli = GitCommandLineUtils.getBaseGitCommandLine(fileSet.getBasedir(), "log");
         baseCli.createArg().setValue("-1"); // only most recent commit matters
-        baseCli.createArg().setValue("--no-merges"); // skip merge commits
+        if (skipMergeCommits(parameters)) {
+            baseCli.createArg().setValue("--no-merges"); // skip merge commits
+        }
         baseCli.addArg(GitInfoConsumer.getFormatArgument());
 
         List<InfoItem> infoItems = new LinkedList<>();
@@ -64,7 +66,9 @@ public class GitInfoCommand extends AbstractCommand implements GitCommand {
             for (File scmFile : fileSet.getFileList()) {
                 baseCli = GitCommandLineUtils.getBaseGitCommandLine(fileSet.getBasedir(), "log");
                 baseCli.createArg().setValue("-1"); // only most recent commit matters
-                baseCli.createArg().setValue("--no-merges"); // skip merge commits
+                if (skipMergeCommits(parameters)) {
+                    baseCli.createArg().setValue("--no-merges"); // skip merge commits
+                }
                 baseCli.addArg(GitInfoConsumer.getFormatArgument());
                 // Insert a separator to make sure that files aren't interpreted as part of the version spec
                 baseCli.createArg().setValue("--");
@@ -100,6 +104,23 @@ public class GitInfoCommand extends AbstractCommand implements GitCommand {
             return NO_REVISION_LENGTH;
         } else {
             return parameters.getInt(CommandParameter.SCM_SHORT_REVISION_LENGTH, NO_REVISION_LENGTH);
+        }
+    }
+
+    /**
+     * Whether to skip merge commits when getting git info.
+     *
+     * @param parameters
+     * @return true if parameter {@link CommandParameter.SCM_SKIP_MERGE_COMMITS} is absent, <br>
+     *         and otherwise - a boolean flag to skip merge commits
+     * @throws ScmException
+     * @since 2.2.2
+     */
+    private static boolean skipMergeCommits(final CommandParameters parameters) throws ScmException {
+        if (parameters == null) {
+            return true;
+        } else {
+            return parameters.getBoolean(CommandParameter.SCM_SKIP_MERGE_COMMITS, true);
         }
     }
 }

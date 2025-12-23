@@ -28,6 +28,8 @@ import org.apache.maven.scm.command.info.InfoScmResult;
 import org.apache.maven.scm.provider.ScmProvider;
 import org.apache.maven.scm.provider.ScmProviderRepository;
 import org.apache.maven.scm.provider.git.GitScmTestUtils;
+import org.apache.maven.scm.provider.git.gitexe.GitExeScmProvider;
+import org.apache.maven.scm.repository.ScmRepository;
 import org.junit.Test;
 
 import static org.apache.maven.scm.provider.git.GitScmTestUtils.GIT_COMMAND_LINE;
@@ -55,6 +57,46 @@ public class GitInfoCommandTest extends ScmTestCase {
                 "cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767",
                 result.getInfoItems().get(0).getRevision());
         //
+    }
+
+    @Test
+    public void testInfoCommandWithSkipMergeCommits() throws Exception {
+        checkSystemCmdPresence(GIT_COMMAND_LINE);
+
+        GitScmTestUtils.initRepo(
+                "src/test/resources/git/info", getRepositoryRoot(), getWorkingCopy(), "dotgit-with-merge-commits");
+        GitExeScmProvider provider = (GitExeScmProvider) getScmManager().getProviderByUrl(getScmUrl());
+        ScmRepository repository = getScmManager().makeScmRepository("scm:git:file://" + getRepositoryRoot());
+        assertNotNull(repository);
+
+        ScmProviderRepository providerRepository = provider.makeProviderScmRepository(getRepositoryRoot());
+        CommandParameters commandParameters = new CommandParameters();
+        commandParameters.setInt(CommandParameter.SCM_SHORT_REVISION_LENGTH, 6);
+        commandParameters.setString(CommandParameter.SCM_SKIP_MERGE_COMMITS, "true");
+        InfoScmResult result =
+                provider.info(providerRepository, new ScmFileSet(getRepositoryRoot()), commandParameters);
+        assertNotNull(result);
+        assertEquals("d91c6a", result.getInfoItems().get(0).getRevision());
+    }
+
+    @Test
+    public void testInfoCommandWithoutSkippingMergeCommits() throws Exception {
+        checkSystemCmdPresence(GIT_COMMAND_LINE);
+
+        GitScmTestUtils.initRepo(
+                "src/test/resources/git/info", getRepositoryRoot(), getWorkingCopy(), "dotgit-with-merge-commits");
+        GitExeScmProvider provider = (GitExeScmProvider) getScmManager().getProviderByUrl(getScmUrl());
+        ScmRepository repository = getScmManager().makeScmRepository("scm:git:file://" + getRepositoryRoot());
+        assertNotNull(repository);
+
+        ScmProviderRepository providerRepository = provider.makeProviderScmRepository(getRepositoryRoot());
+        CommandParameters commandParameters = new CommandParameters();
+        commandParameters.setInt(CommandParameter.SCM_SHORT_REVISION_LENGTH, 6);
+        commandParameters.setString(CommandParameter.SCM_SKIP_MERGE_COMMITS, "false");
+        InfoScmResult result =
+                provider.info(providerRepository, new ScmFileSet(getRepositoryRoot()), commandParameters);
+        assertNotNull(result);
+        assertEquals("81c4ac", result.getInfoItems().get(0).getRevision());
     }
 
     @Test

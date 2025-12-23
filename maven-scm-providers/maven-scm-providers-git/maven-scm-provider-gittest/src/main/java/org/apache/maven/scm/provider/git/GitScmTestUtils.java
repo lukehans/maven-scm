@@ -46,6 +46,10 @@ public final class GitScmTestUtils {
     }
 
     public static void initRepo(String source, File repository, File workingDirectory) throws IOException {
+        initRepo(source, repository, workingDirectory, "dotgit");
+    }
+
+    public static void initRepo(String source, File repository, File workingDirectory, String dotgitDirectory) throws IOException {
         // Copy the repository to target
         File src = PlexusJUnit4TestCase.getTestFile(source);
 
@@ -55,7 +59,7 @@ public final class GitScmTestUtils {
 
         FileUtils.copyDirectoryStructure(src, repository);
 
-        File dotGitDirectory = new File(src, "dotgit");
+        File dotGitDirectory = new File(src, dotgitDirectory);
 
         if (dotGitDirectory.exists()) {
             FileUtils.copyDirectoryStructure(dotGitDirectory, new File(repository, ".git"));
