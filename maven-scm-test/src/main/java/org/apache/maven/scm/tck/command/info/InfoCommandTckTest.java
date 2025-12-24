@@ -21,7 +21,11 @@ package org.apache.maven.scm.tck.command.info;
 import java.io.File;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
+import com.google.common.collect.Lists;
+import org.apache.maven.scm.CommandParameter;
+import org.apache.maven.scm.CommandParameters;
 import org.apache.maven.scm.ScmFileSet;
 import org.apache.maven.scm.ScmTckTestCase;
 import org.apache.maven.scm.command.info.InfoItem;

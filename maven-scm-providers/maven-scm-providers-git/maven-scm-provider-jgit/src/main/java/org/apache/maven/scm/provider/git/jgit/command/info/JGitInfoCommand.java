@@ -24,10 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.scm.CommandParameters;
-import org.apache.maven.scm.ScmException;
-import org.apache.maven.scm.ScmFileSet;
-import org.apache.maven.scm.ScmResult;
+import org.apache.maven.scm.*;
 import org.apache.maven.scm.command.AbstractCommand;
 import org.apache.maven.scm.command.info.InfoItem;
 import org.apache.maven.scm.command.info.InfoScmResult;
@@ -70,7 +67,8 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
                 // iterate over all files
                 for (File file : JGitUtils.getWorkingCopyRelativePaths(
                         git.getRepository().getWorkTree(), fileSet)) {
-                    infoItems.add(getInfoItem(git.getRepository(), objectId, file));
+                    boolean skipMergeCommits = parameters.getString(CommandParameter.SCM_SKIP_MERGE_COMMITS).equals("true");
+                    infoItems.add(getInfoItem(git.getRepository(), objectId, file, skipMergeCommits));
                 }
             }
             return new InfoScmResult(infoItems, new ScmResult("JGit.resolve(HEAD)", "", objectId.toString(), true));
@@ -81,8 +79,8 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
         }
     }
 
-    protected InfoItem getInfoItem(Repository repository, ObjectId headObjectId, File file) throws IOException {
-        RevCommit commit = getMostRecentCommitForPath(repository, headObjectId, JGitUtils.toNormalizedFilePath(file));
+    protected InfoItem getInfoItem(Repository repository, ObjectId headObjectId, File file, boolean skipMergeCommits) throws IOException {
+        RevCommit commit = getMostRecentCommitForPath(repository, headObjectId, JGitUtils.toNormalizedFilePath(file), skipMergeCommits);
         return getInfoItem(commit, file);
     }
 
@@ -100,7 +98,7 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
         return infoItem;
     }
 
-    private RevCommit getMostRecentCommitForPath(Repository repository, ObjectId headObjectId, String path)
+    private RevCommit getMostRecentCommitForPath(Repository repository, ObjectId headObjectId, String path, boolean skipMergeCommits)
             throws IOException {
         RevCommit latestCommit = null;
         try (RevWalk revWalk = new RevWalk(repository)) {
@@ -108,7 +106,30 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
             revWalk.markStart(headCommit);
             revWalk.sort(RevSort.COMMIT_TIME_DESC);
             revWalk.setTreeFilter(AndTreeFilter.create(PathFilter.create(path), TreeFilter.ANY_DIFF));
-            latestCommit = revWalk.next();
+            //latestCommit = revWalk.next();
+            while ((latestCommit = revWalk.next()) != null) {
+                if (!skipMergeCommits || latestCommit.getParentCount() < 2) {
+                    return latestCommit;   // most recent non-merge commit
+                }
+            }
+        }
+        return latestCommit;
+    }
+
+    private RevCommit getMostRecentCommitForPath2(Repository repository, ObjectId headObjectId, String path, boolean skipMergeCommits)
+            throws IOException {
+        RevCommit latestCommit = null;
+        try (RevWalk revWalk = new RevWalk(repository)) {
+            RevCommit headCommit = revWalk.parseCommit(headObjectId);
+            revWalk.markStart(headCommit);
+            revWalk.sort(RevSort.COMMIT_TIME_DESC);
+            revWalk.setTreeFilter(AndTreeFilter.create(PathFilter.create(path), TreeFilter.ANY_DIFF));
+            //latestCommit = revWalk.next();
+            while ((latestCommit = revWalk.next()) != null) {
+                if (!skipMergeCommits || latestCommit.getParentCount() < 2) {
+                    return latestCommit;   // most recent non-merge commit
+                }
+            }
         }
         return latestCommit;
     }

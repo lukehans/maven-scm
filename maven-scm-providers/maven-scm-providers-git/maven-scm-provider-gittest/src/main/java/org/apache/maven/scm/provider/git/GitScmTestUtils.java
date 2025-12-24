@@ -49,7 +49,8 @@ public final class GitScmTestUtils {
         initRepo(source, repository, workingDirectory, "dotgit");
     }
 
-    public static void initRepo(String source, File repository, File workingDirectory, String dotgitDirectory) throws IOException {
+    public static void initRepo(String source, File repository, File workingDirectory, String dotgitDirectory)
+            throws IOException {
         // Copy the repository to target
         File src = PlexusJUnit4TestCase.getTestFile(source);
 
