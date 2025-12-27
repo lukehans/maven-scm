@@ -102,7 +102,7 @@ public class GitInfoConsumer extends AbstractConsumer {
      */
     public static Arg getFormatArgument() {
         Commandline.Argument arg = new Commandline.Argument();
-        arg.setValue("--format=format:%H %aI %aE %aN");
+        arg.setValue("--format=format:\"%H %aI %aE %aN\"");
         return arg;
     }
 }
