@@ -24,7 +24,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.scm.*;
+import org.apache.maven.scm.CommandParameter;
+import org.apache.maven.scm.CommandParameters;
+import org.apache.maven.scm.ScmException;
+import org.apache.maven.scm.ScmFileSet;
+import org.apache.maven.scm.ScmResult;
 import org.apache.maven.scm.command.AbstractCommand;
 import org.apache.maven.scm.command.info.InfoItem;
 import org.apache.maven.scm.command.info.InfoScmResult;
@@ -67,8 +71,17 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
                 // iterate over all files
                 for (File file : JGitUtils.getWorkingCopyRelativePaths(
                         git.getRepository().getWorkTree(), fileSet)) {
-                    boolean skipMergeCommits = parameters.getString(CommandParameter.SCM_SKIP_MERGE_COMMITS).equals("true");
-                    infoItems.add(getInfoItem(git.getRepository(), objectId, file, skipMergeCommits));
+                    String skipMergesByDefault = "true";
+                    String param = parameters != null
+                            ? parameters.getString(CommandParameter.SCM_SKIP_MERGE_COMMITS, skipMergesByDefault)
+                            : skipMergesByDefault;
+                    // logger.info("param: " + param);
+                    if (!param.equals("true") && !param.equals("false")) {
+                        logger.warn("Parameter " + CommandParameter.SCM_SKIP_MERGE_COMMITS
+                                + " should be 'true' or 'false' but is '" + param + "'. Defaulting to "
+                                + skipMergesByDefault);
+                    }
+                    infoItems.add(getInfoItem(git.getRepository(), objectId, file, !"false".equals(param)));
                 }
             }
             return new InfoScmResult(infoItems, new ScmResult("JGit.resolve(HEAD)", "", objectId.toString(), true));
@@ -79,8 +92,10 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
         }
     }
 
-    protected InfoItem getInfoItem(Repository repository, ObjectId headObjectId, File file, boolean skipMergeCommits) throws IOException {
-        RevCommit commit = getMostRecentCommitForPath(repository, headObjectId, JGitUtils.toNormalizedFilePath(file), skipMergeCommits);
+    protected InfoItem getInfoItem(Repository repository, ObjectId headObjectId, File file, boolean skipMergeCommits)
+            throws IOException {
+        RevCommit commit = getMostRecentCommitForPath(
+                repository, headObjectId, JGitUtils.toNormalizedFilePath(file), skipMergeCommits);
         return getInfoItem(commit, file);
     }
 
@@ -98,36 +113,51 @@ public class JGitInfoCommand extends AbstractCommand implements GitCommand {
         return infoItem;
     }
 
-    private RevCommit getMostRecentCommitForPath(Repository repository, ObjectId headObjectId, String path, boolean skipMergeCommits)
-            throws IOException {
-        RevCommit latestCommit = null;
+    private RevCommit getMostRecentCommitForPath(
+            Repository repository, ObjectId headObjectId, String path, boolean skipMergeCommits) throws IOException {
+        RevCommit headCommit;
+        logger.info("headObjectId: " + headObjectId.toString());
+        logger.info("path: " + path);
+        logger.info("repository:" + repository.getBranch());
         try (RevWalk revWalk = new RevWalk(repository)) {
-            RevCommit headCommit = revWalk.parseCommit(headObjectId);
+            headCommit = revWalk.parseCommit(headObjectId);
+            RevCommit latestCommit = headCommit;
+            logger.info("headCommit: " + headCommit);
             revWalk.markStart(headCommit);
             revWalk.sort(RevSort.COMMIT_TIME_DESC);
             revWalk.setTreeFilter(AndTreeFilter.create(PathFilter.create(path), TreeFilter.ANY_DIFF));
-            //latestCommit = revWalk.next();
-            while ((latestCommit = revWalk.next()) != null) {
-                if (!skipMergeCommits || latestCommit.getParentCount() < 2) {
-                    return latestCommit;   // most recent non-merge commit
+            logger.info(
+                    "parentCountForHead: " + headCommit.getParentCount() + ", skipMergeCommits: " + skipMergeCommits);
+            while (latestCommit != null) {
+                logger.info(
+                        "latestCommit: " + latestCommit.toString() + ", parentCount: " + latestCommit.getParentCount());
+                if (!skipMergeCommits && latestCommit.getParentCount() > 1) {
+                    logger.info("commit name1: " + latestCommit.getName());
+                    return latestCommit; // most recent non-merge commit
+                } else if (skipMergeCommits && latestCommit.getParentCount() < 2) {
+                    logger.info("commit name2: " + latestCommit.getName());
+                    revWalk.close();
+                    return latestCommit;
                 }
+                latestCommit = revWalk.next();
             }
         }
-        return latestCommit;
+        logger.info(headCommit == null ? "null" : "commit name3: " + headCommit.getName());
+        return headCommit;
     }
 
-    private RevCommit getMostRecentCommitForPath2(Repository repository, ObjectId headObjectId, String path, boolean skipMergeCommits)
-            throws IOException {
+    private RevCommit getMostRecentCommitForPath2(
+            Repository repository, ObjectId headObjectId, String path, boolean skipMergeCommits) throws IOException {
         RevCommit latestCommit = null;
         try (RevWalk revWalk = new RevWalk(repository)) {
             RevCommit headCommit = revWalk.parseCommit(headObjectId);
             revWalk.markStart(headCommit);
             revWalk.sort(RevSort.COMMIT_TIME_DESC);
             revWalk.setTreeFilter(AndTreeFilter.create(PathFilter.create(path), TreeFilter.ANY_DIFF));
-            //latestCommit = revWalk.next();
+            // latestCommit = revWalk.next();
             while ((latestCommit = revWalk.next()) != null) {
                 if (!skipMergeCommits || latestCommit.getParentCount() < 2) {
-                    return latestCommit;   // most recent non-merge commit
+                    return latestCommit; // most recent non-merge commit
                 }
             }
         }

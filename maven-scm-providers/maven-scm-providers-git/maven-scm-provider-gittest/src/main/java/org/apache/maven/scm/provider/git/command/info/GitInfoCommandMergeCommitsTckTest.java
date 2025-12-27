@@ -18,6 +18,10 @@
  */
 package org.apache.maven.scm.provider.git.command.info;
 
+import java.io.File;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
 import org.apache.maven.scm.CommandParameter;
 import org.apache.maven.scm.CommandParameters;
 import org.apache.maven.scm.PlexusJUnit4TestCase;
@@ -28,10 +32,6 @@ import org.apache.maven.scm.provider.git.GitScmTestUtils;
 import org.apache.maven.scm.tck.command.info.InfoCommandTckTest;
 import org.junit.Test;
 
-import java.io.File;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -41,16 +41,19 @@ public abstract class GitInfoCommandMergeCommitsTckTest extends InfoCommandTckTe
     /**
      * {@inheritDoc}
      */
-    /*public void initRepo() throws Exception {
-        GitScmTestUtils.initRepo("src/test/resources/repository/", getRepositoryRoot(), getWorkingDirectory());
-    }*/
     public void initRepo() throws Exception {
-        GitScmTestUtils.initRepo("src/test/resources/repository-with-merge-commit/", getRepositoryRoot(), getWorkingDirectory());
+        GitScmTestUtils.initRepo("src/test/resources/repository/", getRepositoryRoot(), getWorkingDirectory());
     }
+    /*public void initRepo() throws Exception {
+        GitScmTestUtils.initRepo("src/test/resources/repository-with-merge-commit/", getRepositoryRoot(), getWorkingDirectory());
+    }*/
 
     protected File getRepositoryRoot() {
-        return PlexusJUnit4TestCase.getTestFile("target/scm-test/repository-with-merge-commit");
+        return PlexusJUnit4TestCase.getTestFile("target/scm-test/repository");
     }
+    /*protected File getRepositoryRoot() {
+        return PlexusJUnit4TestCase.getTestFile("target/scm-test/repository-with-merge-commit");
+    }*/
 
     /*protected File getRepository() {
         return PlexusJUnit4TestCase.getTestFile("/src/test/repository-with-merge-commit");
@@ -61,14 +64,15 @@ public abstract class GitInfoCommandMergeCommitsTckTest extends InfoCommandTckTe
         ScmProvider scmProvider = getScmManager().getProviderByUrl(getScmUrl());
         CommandParameters parameters = new CommandParameters();
         parameters.setString(CommandParameter.SCM_SKIP_MERGE_COMMITS, "true");
-        InfoScmResult result = scmProvider.info(getScmRepository().getProviderRepository(), getScmFileSet(), parameters);
+        InfoScmResult result =
+                scmProvider.info(getScmRepository().getProviderRepository(), getScmFileSet(), parameters);
         assertResultIsSuccess(result);
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);
         assertEquals("Luke Patton <lpatton0@gmail.com>", item.getLastChangedAuthor());
-        assertEquals("92f139dfec4d1dfb79c3cd2f94e83bf13129668b", item.getRevision());
+        assertEquals("e8dfd98fad1397c9f0d641288dcafe54d07303a2", item.getRevision());
         assertEquals(
-                OffsetDateTime.of(2009, 3, 15, 19, 14, 2, 0, ZoneOffset.ofHours(1)), item.getLastChangedDateTime());
+                OffsetDateTime.of(2025, 12, 24, 2, 10, 14, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
     }
 
     @Test
@@ -76,7 +80,8 @@ public abstract class GitInfoCommandMergeCommitsTckTest extends InfoCommandTckTe
         ScmProvider scmProvider = getScmManager().getProviderByUrl(getScmUrl());
         CommandParameters parameters = new CommandParameters();
         parameters.setString(CommandParameter.SCM_SKIP_MERGE_COMMITS, "false");
-        InfoScmResult result = scmProvider.info(getScmRepository().getProviderRepository(), getScmFileSet(), parameters);
+        InfoScmResult result =
+                scmProvider.info(getScmRepository().getProviderRepository(), getScmFileSet(), parameters);
         assertResultIsSuccess(result);
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);

@@ -54,7 +54,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         InfoScmResult result = provider.info(repository, new ScmFileSet(getRepositoryRoot()), new CommandParameters());
         assertNotNull(result);
         assertEquals(
-                "cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767",
+                "d91c6a1367e8f54965a4e6b6075e64931f8860a9",
                 result.getInfoItems().get(0).getRevision());
         //
     }
@@ -63,8 +63,7 @@ public class GitInfoCommandTest extends ScmTestCase {
     public void testInfoCommandWithSkipMergeCommits() throws Exception {
         checkSystemCmdPresence(GIT_COMMAND_LINE);
 
-        GitScmTestUtils.initRepo(
-                "src/test/resources/git/info", getRepositoryRoot(), getWorkingCopy(), "dotgit-with-merge-commits");
+        GitScmTestUtils.initRepo("src/test/resources/git/info", getRepositoryRoot(), getWorkingCopy(), "dotgit");
         GitExeScmProvider provider = (GitExeScmProvider) getScmManager().getProviderByUrl(getScmUrl());
         ScmRepository repository = getScmManager().makeScmRepository("scm:git:file://" + getRepositoryRoot());
         assertNotNull(repository);
@@ -83,8 +82,7 @@ public class GitInfoCommandTest extends ScmTestCase {
     public void testInfoCommandWithoutSkippingMergeCommits() throws Exception {
         checkSystemCmdPresence(GIT_COMMAND_LINE);
 
-        GitScmTestUtils.initRepo(
-                "src/test/resources/git/info", getRepositoryRoot(), getWorkingCopy(), "dotgit-with-merge-commits");
+        GitScmTestUtils.initRepo("src/test/resources/git/info", getRepositoryRoot(), getWorkingCopy(), "dotgit");
         GitExeScmProvider provider = (GitExeScmProvider) getScmManager().getProviderByUrl(getScmUrl());
         ScmRepository repository = getScmManager().makeScmRepository("scm:git:file://" + getRepositoryRoot());
         assertNotNull(repository);
@@ -114,7 +112,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         assertNotNull(result);
         assertEquals(
                 "revision must be short, exactly 6 digits ",
-                "cd3c0d",
+                "d91c6a",
                 result.getInfoItems().get(0).getRevision());
     }
 
@@ -133,7 +131,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         assertNotNull(result);
         assertEquals(
                 "revision should not be short",
-                "cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767",
+                "d91c6a1367e8f54965a4e6b6075e64931f8860a9",
                 result.getInfoItems().get(0).getRevision());
     }
 

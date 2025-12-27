@@ -21,9 +21,7 @@ package org.apache.maven.scm.tck.command.info;
 import java.io.File;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
 
-import com.google.common.collect.Lists;
 import org.apache.maven.scm.CommandParameter;
 import org.apache.maven.scm.CommandParameters;
 import org.apache.maven.scm.ScmFileSet;
@@ -47,22 +45,27 @@ public abstract class InfoCommandTckTest extends ScmTckTestCase {
         assertResultIsSuccess(result);
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);
-        assertEquals("Mark Struberg <struberg@yahoo.de>", item.getLastChangedAuthor());
-        assertEquals("92f139dfec4d1dfb79c3cd2f94e83bf13129668b", item.getRevision());
+        assertEquals("Luke Patton <lpatton0@gmail.com>", item.getLastChangedAuthor());
+        assertEquals("e8dfd98fad1397c9f0d641288dcafe54d07303a2", item.getRevision());
         assertEquals(
-                OffsetDateTime.of(2009, 3, 15, 19, 14, 2, 0, ZoneOffset.ofHours(1)), item.getLastChangedDateTime());
+                OffsetDateTime.of(2025, 12, 24, 2, 10, 14, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
     }
 
     @Test
     public void testInfoCommandFromBasedirDifferentFromWorkingCopyDirectory() throws Exception {
         ScmProvider scmProvider = getScmManager().getProviderByUrl(getScmUrl());
         ScmFileSet fileSet = new ScmFileSet(new File(getWorkingCopy(), "src/main"), new File("java/Application.java"));
-        InfoScmResult result = scmProvider.info(getScmRepository().getProviderRepository(), fileSet, null);
+        CommandParameters parameters = new CommandParameters();
+        parameters.setString(CommandParameter.SCM_SKIP_MERGE_COMMITS, "false2");
+        InfoScmResult result = scmProvider.info(getScmRepository().getProviderRepository(), fileSet, parameters);
         assertResultIsSuccess(result);
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);
+
         assertEquals("Mark Struberg <struberg@yahoo.de>", item.getLastChangedAuthor());
         assertEquals("92f139dfec4d1dfb79c3cd2f94e83bf13129668b", item.getRevision());
+        // assertEquals("Luke Patton <lpatton0@gmail.com>", item.getLastChangedAuthor());
+        // assertEquals("e8dfd98fad1397c9f0d641288dcafe54d07303a2", item.getRevision());
         assertEquals(
                 OffsetDateTime.of(2009, 3, 15, 19, 14, 2, 0, ZoneOffset.ofHours(1)), item.getLastChangedDateTime());
     }

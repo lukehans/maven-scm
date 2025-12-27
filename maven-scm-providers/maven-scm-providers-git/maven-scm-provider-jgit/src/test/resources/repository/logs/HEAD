@@ -1,3 +1,10 @@
 0000000000000000000000000000000000000000 c51dcd33e7b71897603c203b5e0afc1d75f70051 Mark Struberg <struberg@yahoo.de> 1196106917 +0100
 c51dcd33e7b71897603c203b5e0afc1d75f70051 baa229a9193371fad604444f64c4f26f8ff702f3 Mark Struberg <struberg@yahoo.de> 1197041894 +0100	push
 baa229a9193371fad604444f64c4f26f8ff702f3 1d308c3b92eb0df9c0dc76436d50edfd0ca41d18 Mark Struberg <struberg@yahoo.de> 1197042012 +0100	push
+92f139dfec4d1dfb79c3cd2f94e83bf13129668b 2d7814cfb824434ec8a92dae89982c61df440fef Luke Patton <lpatton0@gmail.com> 1766560121 -0500	commit: add foo.txt
+2d7814cfb824434ec8a92dae89982c61df440fef 2d7814cfb824434ec8a92dae89982c61df440fef Luke Patton <lpatton0@gmail.com> 1766560162 -0500	checkout: moving from master to feature/foo
+2d7814cfb824434ec8a92dae89982c61df440fef 92f139dfec4d1dfb79c3cd2f94e83bf13129668b Luke Patton <lpatton0@gmail.com> 1766560182 -0500	checkout: moving from feature/foo to 92f139dfec4d1dfb79c3cd2f94e83bf13129668b
+92f139dfec4d1dfb79c3cd2f94e83bf13129668b 92f139dfec4d1dfb79c3cd2f94e83bf13129668b Luke Patton <lpatton0@gmail.com> 1766560186 -0500	checkout: moving from 92f139dfec4d1dfb79c3cd2f94e83bf13129668b to master
+92f139dfec4d1dfb79c3cd2f94e83bf13129668b 2d7814cfb824434ec8a92dae89982c61df440fef Luke Patton <lpatton0@gmail.com> 1766560197 -0500	checkout: moving from master to feature/foo
+2d7814cfb824434ec8a92dae89982c61df440fef 92f139dfec4d1dfb79c3cd2f94e83bf13129668b Luke Patton <lpatton0@gmail.com> 1766560203 -0500	checkout: moving from feature/foo to master
+92f139dfec4d1dfb79c3cd2f94e83bf13129668b e8dfd98fad1397c9f0d641288dcafe54d07303a2 Luke Patton <lpatton0@gmail.com> 1766560214 -0500	merge feature/foo: Merge made by the 'ort' strategy.

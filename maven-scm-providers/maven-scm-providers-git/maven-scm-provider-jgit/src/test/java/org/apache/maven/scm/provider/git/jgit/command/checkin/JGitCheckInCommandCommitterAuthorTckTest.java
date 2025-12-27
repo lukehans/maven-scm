@@ -100,7 +100,7 @@ public class JGitCheckInCommandCommitterAuthorTckTest extends GitCheckInCommandT
 
         RevCommit head = getHeadCommit(git.getRepository());
         // Mark created the test repo...
-        assertEquals("Mark Struberg", head.getCommitterIdent().getName());
+        assertEquals("Luke Patton", head.getCommitterIdent().getName());
         JGitUtils.closeRepo(git);
 
         createAndCommitFile(fooJava, null);
