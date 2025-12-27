@@ -52,7 +52,7 @@ public abstract class CheckOutCommandTckTest extends ScmTckTestCase {
 
         List<ScmFile> checkedOutFiles = result.getCheckedOutFiles();
 
-        if (checkedOutFiles.size() != 5) {
+        if (checkedOutFiles.size() != 4) {
             SortedSet<ScmFile> files = new TreeSet<>(checkedOutFiles);
 
             int i = 0;
