@@ -70,9 +70,9 @@ public abstract class GitInfoCommandMergeCommitsTckTest extends InfoCommandTckTe
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);
         assertEquals("Luke Patton <lpatton0@gmail.com>", item.getLastChangedAuthor());
-        assertEquals("e8dfd98fad1397c9f0d641288dcafe54d07303a2", item.getRevision());
+        assertEquals("283732a5ae86e52d410ed0be37c358d7fb9b3e2e", item.getRevision());
         assertEquals(
-                OffsetDateTime.of(2025, 12, 24, 2, 10, 14, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
+                OffsetDateTime.of(2025, 12, 27, 16, 56, 21, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
     }
 
     @Test
@@ -86,8 +86,8 @@ public abstract class GitInfoCommandMergeCommitsTckTest extends InfoCommandTckTe
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);
         assertEquals("Luke Patton <lpatton0@gmail.com>", item.getLastChangedAuthor());
-        assertEquals("e8dfd98fad1397c9f0d641288dcafe54d07303a2", item.getRevision());
+        assertEquals("283732a5ae86e52d410ed0be37c358d7fb9b3e2e", item.getRevision());
         assertEquals(
-                OffsetDateTime.of(2025, 12, 24, 2, 10, 14, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
+                OffsetDateTime.of(2025, 12, 27, 16, 56, 21, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
     }
 }

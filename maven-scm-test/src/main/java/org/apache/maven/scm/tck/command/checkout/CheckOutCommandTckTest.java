@@ -63,7 +63,7 @@ public abstract class CheckOutCommandTckTest extends ScmTckTestCase {
                 System.out.println(i + ": " + scmFile);
             }
 
-            fail("Expected 5 files in the updated files list, was " + checkedOutFiles.size());
+            fail("Expected 4 files in the updated files list, was " + checkedOutFiles.size());
         }
     }
 
