@@ -1,3 +1,14 @@
-0000000000000000000000000000000000000000 c51dcd33e7b71897603c203b5e0afc1d75f70051 Mark Struberg <struberg@yahoo.de> 1196106917 +0100
-c51dcd33e7b71897603c203b5e0afc1d75f70051 baa229a9193371fad604444f64c4f26f8ff702f3 Mark Struberg <struberg@yahoo.de> 1197041894 +0100	push
-baa229a9193371fad604444f64c4f26f8ff702f3 1d308c3b92eb0df9c0dc76436d50edfd0ca41d18 Mark Struberg <struberg@yahoo.de> 1197042012 +0100	push
+0000000000000000000000000000000000000000 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Olivier Lamy <olamy@apache.org> 1296030224 +0100	commit (initial): test
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766527850 -0500	checkout: moving from master to feature/foo
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 d91c6a1367e8f54965a4e6b6075e64931f8860a9 Luke Patton <lpatton0@gmail.com> 1766527911 -0500	commit: deleted foo.txt
+d91c6a1367e8f54965a4e6b6075e64931f8860a9 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766527931 -0500	checkout: moving from feature/foo to master
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 81c4acf731b161c48e59430a72c4168a77bfd703 Luke Patton <lpatton0@gmail.com> 1766527938 -0500	merge feature/foo: Merge made by the 'ort' strategy.
+81c4acf731b161c48e59430a72c4168a77bfd703 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766958373 -0500	checkout: moving from master to cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 d91c6a1367e8f54965a4e6b6075e64931f8860a9 Luke Patton <lpatton0@gmail.com> 1766958437 -0500	checkout: moving from cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 to feature/foo
+d91c6a1367e8f54965a4e6b6075e64931f8860a9 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766958449 -0500	checkout: moving from feature/foo to cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766958457 -0500	checkout: moving from cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 to master
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766958481 -0500	checkout: moving from master to feauture/foo-update
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 98c29d07e90187a7e50bab38fbeaa941d8b110cf Luke Patton <lpatton0@gmail.com> 1766958502 -0500	commit: updated foo.txt
+98c29d07e90187a7e50bab38fbeaa941d8b110cf 5eca0f7a13d7a911516703e4aa58bd6755e1d093 Luke Patton <lpatton0@gmail.com> 1766958534 -0500	commit: undo update to foo.txt
+5eca0f7a13d7a911516703e4aa58bd6755e1d093 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766958538 -0500	checkout: moving from feauture/foo-update to master
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 98fc6f0ef6d0a3688f522656687f832b46d058f9 Luke Patton <lpatton0@gmail.com> 1766958578 -0500	merge feauture/foo-update: Merge made by the 'ort' strategy.
