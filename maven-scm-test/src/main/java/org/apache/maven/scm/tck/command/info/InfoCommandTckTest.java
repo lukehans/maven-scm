@@ -22,7 +22,6 @@ import java.io.File;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-import org.apache.maven.scm.CommandParameter;
 import org.apache.maven.scm.CommandParameters;
 import org.apache.maven.scm.ScmFileSet;
 import org.apache.maven.scm.ScmTckTestCase;
