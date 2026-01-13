@@ -54,7 +54,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         InfoScmResult result = provider.info(repository, new ScmFileSet(getRepositoryRoot()), new CommandParameters());
         assertNotNull(result);
         assertEquals(
-                "d91c6a1367e8f54965a4e6b6075e64931f8860a9",
+                "5d6be9757d52185512c54e22dba6530d0a564ded",
                 result.getInfoItems().get(0).getRevision());
         //
     }
@@ -75,7 +75,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         InfoScmResult result =
                 provider.info(providerRepository, new ScmFileSet(getRepositoryRoot()), commandParameters);
         assertNotNull(result);
-        assertEquals("d91c6a", result.getInfoItems().get(0).getRevision());
+        assertEquals("5d6be9", result.getInfoItems().get(0).getRevision());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         InfoScmResult result =
                 provider.info(providerRepository, new ScmFileSet(getRepositoryRoot()), commandParameters);
         assertNotNull(result);
-        assertEquals("81c4ac", result.getInfoItems().get(0).getRevision());
+        assertEquals("a746da", result.getInfoItems().get(0).getRevision());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         assertNotNull(result);
         assertEquals(
                 "revision must be short, exactly 6 digits ",
-                "d91c6a",
+                "5d6be9",
                 result.getInfoItems().get(0).getRevision());
     }
 
@@ -131,7 +131,7 @@ public class GitInfoCommandTest extends ScmTestCase {
         assertNotNull(result);
         assertEquals(
                 "revision should not be short",
-                "d91c6a1367e8f54965a4e6b6075e64931f8860a9",
+                "5d6be9757d52185512c54e22dba6530d0a564ded",
                 result.getInfoItems().get(0).getRevision());
     }
 
