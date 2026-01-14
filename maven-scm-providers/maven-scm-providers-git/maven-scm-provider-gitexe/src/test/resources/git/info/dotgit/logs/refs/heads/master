@@ -1,2 +1,2 @@
-0000000000000000000000000000000000000000 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Olivier Lamy <olamy@apache.org> 1296030224 +0100	commit (initial): test
-cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 a746da85dabff99af06772c0e457cfc4e8c6b74f Luke Patton <lpatton0@gmail.com> 1766962412 -0500	merge feature/foo: Merge made by the 'ort' strategy.
+0000000000000000000000000000000000000000 cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 Luke Patton <lpatton0@gmail.com> 1766958457 -0500	branch: Created from HEAD
+cd3c0dfacb65955e6fbb35c56cc5b1bf8ce4f767 98fc6f0ef6d0a3688f522656687f832b46d058f9 Luke Patton <lpatton0@gmail.com> 1766958578 -0500	merge feauture/foo-update: Merge made by the 'ort' strategy.
