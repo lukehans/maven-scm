@@ -39,7 +39,7 @@ public class JGitRemoteInfoCommandTckTest extends AbstractGitRemoteInfoCommandTc
     protected void checkResult(RemoteInfoScmResult result) {
         assertEquals(1, result.getBranches().size());
         assertEquals(
-                "283732a5ae86e52d410ed0be37c358d7fb9b3e2e", result.getBranches().get("master"));
+                "ea25d181203827d5ac1b9a89d7e1d2c66b27b9d9", result.getBranches().get("master"));
 
         assertEquals(0, result.getTags().size());
     }

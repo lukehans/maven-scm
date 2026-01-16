@@ -44,10 +44,10 @@ public abstract class InfoCommandTckTest extends ScmTckTestCase {
         assertResultIsSuccess(result);
         assertEquals(1, result.getInfoItems().size());
         InfoItem item = result.getInfoItems().get(0);
-        assertEquals("Mark Struberg <struberg@yahoo.de>", item.getLastChangedAuthor());
-        assertEquals("92f139dfec4d1dfb79c3cd2f94e83bf13129668b", item.getRevision());
+        assertEquals("Luke Patton <lpatton0@gmail.com>", item.getLastChangedAuthor());
+        assertEquals("ea25d181203827d5ac1b9a89d7e1d2c66b27b9d9", item.getRevision());
         assertEquals(
-                OffsetDateTime.of(2009, 3, 15, 19, 14, 02, 0, ZoneOffset.ofHours(1)), item.getLastChangedDateTime());
+                OffsetDateTime.of(2025, 12, 28, 16, 13, 48, 0, ZoneOffset.ofHours(-5)), item.getLastChangedDateTime());
     }
 
     @Test
@@ -63,6 +63,6 @@ public abstract class InfoCommandTckTest extends ScmTckTestCase {
         assertEquals("Mark Struberg <struberg@yahoo.de>", item.getLastChangedAuthor());
         assertEquals("92f139dfec4d1dfb79c3cd2f94e83bf13129668b", item.getRevision());
         assertEquals(
-                OffsetDateTime.of(2009, 3, 15, 19, 14, 2, 0, ZoneOffset.ofHours(1)), item.getLastChangedDateTime());
+                OffsetDateTime.of(2009, 03, 15, 19, 14, 02, 0, ZoneOffset.ofHours(1)), item.getLastChangedDateTime());
     }
 }
